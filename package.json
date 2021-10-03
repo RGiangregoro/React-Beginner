@@ -2,6 +2,8 @@
   "dependencies": {
     "bootstrap-social": "5.1.1",
     "create-react-app": "^4.0.3",
-    "font-awesome": "4.7.0"
+    "font-awesome": "4.7.0",
+    "react-redux": "5.0.7",
+    "redux": "3.7.2"
   }
 }
