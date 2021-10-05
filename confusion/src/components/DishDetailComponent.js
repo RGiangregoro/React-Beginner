@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import {
     Button, Modal, ModalBody, ModalHeader, Label, Row, Col
 } from "reactstrap";
-
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
 
 
@@ -167,15 +167,33 @@ class CommentForm extends Component {
 
 
 
-    function RenderDish({dish}) {
-        if (dish != null) {
+    function RenderDish(props) {
+        if (props.isLoading) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if (props.errMess) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <h4>{props.errMess}</h4>
+                    </div>
+                </div>
+            );
+        }
+        else if (props.dish != null) {
             return (
                 <div className='col-12 col-md-5 m-1'>
                     <Card>
-                        <CardImg width="100%" src={dish.image} alt={dish.name} />
+                        <CardImg width="100%" src={props.dish.image} alt={props.dish.name} />
                         <CardBody>
-                            <CardTitle> {dish.name}</CardTitle>
-                            <CardText> {dish.description} </CardText>
+                            <CardTitle> {props.dish.name}</CardTitle>
+                            <CardText> {props.dish.description} </CardText>
                         </CardBody>
                     </Card>
                 </div>   
@@ -249,7 +267,7 @@ class CommentForm extends Component {
                 </div>
 
                 <div className='row'>
-                    <RenderDish dish={ props.dish } />
+                    <RenderDish dish={ props } />
                     <RenderComments comments={props.comments}
                         addComment={props.addComment} dishId={props.dish.id} />
                 </div>
