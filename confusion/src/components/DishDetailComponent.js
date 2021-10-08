@@ -6,6 +6,7 @@ import {
 } from "reactstrap";
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 
 
@@ -32,7 +33,7 @@ class CommentForm extends Component {
     }
 
     handleCommentFormSubmit(values) {
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     toggleCommentFormModal() {
@@ -190,7 +191,7 @@ class CommentForm extends Component {
             return (
                 <div className='col-12 col-md-5 m-1'>
                     <Card>
-                        <CardImg width="100%" src={props.dish.image} alt={props.dish.name} />
+                    <CardImg top src={baseUrl + "/images/" + props.dish.image} alt={props.dish.name} />
                         <CardBody>
                             <CardTitle> {props.dish.name}</CardTitle>
                             <CardText> {props.dish.description} </CardText>
@@ -206,7 +207,7 @@ class CommentForm extends Component {
         }
     }
 
-    function RenderComments({comments, addComment, dishId}) {
+    function RenderComments({comments, postComment, dishId}) {
         if (comments == null) {
             return (<div></div>)
         }
@@ -233,7 +234,7 @@ class CommentForm extends Component {
                 <ul className='list-unstyled'>
                     {cmnts}
                 </ul>
-                <CommentForm dishId={dishId} addComment={addComment} />
+                <CommentForm dishId={dishId} postComment={postComment} />
             </div>
         )
     }
@@ -269,7 +270,7 @@ class CommentForm extends Component {
                 <div className='row'>
                     <RenderDish dish={ props } />
                     <RenderComments comments={props.comments}
-                        addComment={props.addComment} dishId={props.dish.id} />
+                        postComment={props.postComment} dishId={props.dish.id} />
                 </div>
 
 
